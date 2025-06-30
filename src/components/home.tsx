@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import FruitList from "./fruitList";
-import FruitTable from "./fruitTable";
+import { DataTable } from "./fruitTable/data-table";
+import { columns } from "./fruitTable/columns";
 import FruitJar from "./fruitJar";
 
 export interface Fruit {
@@ -63,9 +64,9 @@ const Home = () => {
     });
 
     return (
-      <div className="flex w-full flex-row gap-10">
-        <Tabs defaultValue="list" className="w-full min-w-[730px]">
-          <TabsList className="mb-4">
+      <div className="flex w-full flex-col-reverse lg:flex-row gap-10 ">
+        <Tabs defaultValue="list" className="w-full min-w-[400px] ">
+          <TabsList className="mb-1">
             <TabsTrigger value="list">List View</TabsTrigger>
             <TabsTrigger value="table">Table View</TabsTrigger>
           </TabsList>
@@ -82,14 +83,15 @@ const Home = () => {
           </TabsContent>
 
           <TabsContent value="table">
-            <FruitTable
-              allFruits={data}
+            <DataTable
+              columns={columns}
+              data={data}
               jarContents={jarContents}
               setJarContents={setJarContents}
             />
           </TabsContent>
         </Tabs>
-        <div className="w-full">
+        <div className="w-full min-w-[400px]">
           <FruitJar
             jarContents={jarContents}
             setJarContents={setJarContents}

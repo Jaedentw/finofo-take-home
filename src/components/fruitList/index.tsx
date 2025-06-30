@@ -46,7 +46,7 @@ const FruitList: React.FC<FruitListProps> = ({
   return (
     <>
       {/* Radio Group for selecting sort type */}
-      <div className="flex w-full items-center justify-between p-2 h-[52px]">
+      <div className="flex flex-wrap w-full items-center justify-between p-2 min-h-[52px] gap-4 mb-2">
         <RadioGroup
           defaultValue="name"
           className="flex"
@@ -93,7 +93,7 @@ const FruitList: React.FC<FruitListProps> = ({
       </div>
 
       {/* Display the list of fruits alphabetically if sortValue is "name"(none) */}
-      <div className="flex flex-col mt-2 h-full max-h-[85vh] overflow-y-auto">
+      <div className="flex flex-col mt-10 md:mt-2 h-full max-h-[85vh] overflow-y-auto">
         {sortValue === "name" &&
           allFruits?.map((fruit) => (
             <FruitListItem

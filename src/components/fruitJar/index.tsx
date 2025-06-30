@@ -1,9 +1,9 @@
-import { XCircle } from "lucide-react";
+import { Ban, XCircle } from "lucide-react";
 import type { Fruit, FruitJarContents } from "../home";
-import { ScrollArea } from "../ui/scroll-area";
 import React, { useMemo, useState } from "react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
+import { ChartPieLabelCustom } from "./pie-chart";
 
 interface FruitJarProps {
   allFruits: Fruit[];
@@ -36,10 +36,20 @@ const FruitJar: React.FC<FruitJarProps> = ({
 
   return (
     <div className="flex flex-col items-center bg-[url(/src/assets/glass-jar.png)] bg-contain bg-center bg-no-repeat relative w-full h-[90vh]">
-      <div className="absolute m-auto mt-[45%] w-full h-[30%] bg-white/50"></div>
+      <Tooltip>
+        <TooltipTrigger className="absolute right-0 top-6">
+          <Ban
+            onClick={() => {
+              setJarContents({});
+            }}
+          />
+        </TooltipTrigger>
+        <TooltipContent>Clear jar of all fruits</TooltipContent>
+      </Tooltip>
+
       <Tabs
         defaultValue="contents"
-        className="relative top-[30%] left-0 w-[50%] h-full max-h-[640px]"
+        className="relative top-[30%] left-0 w-[80%] h-full max-h-[65%] md:w-[60%] md:max-h-[55%] lg:max-h-[65%]"
       >
         <TabsList className="mb-1 border shadow-lg">
           <TabsTrigger value="contents">Jar Contents</TabsTrigger>
@@ -47,22 +57,22 @@ const FruitJar: React.FC<FruitJarProps> = ({
         </TabsList>
 
         <TabsContent value="contents" className="h-full">
-          <div className="flex flex-col w-full h-full p-8 pt-6 bg-white border rounded-lg shadow-lg">
-            <b className="text-lg mb-2">Your Fruits</b>
+          <div className="flex flex-col w-full h-full bg-white border rounded-lg shadow-lg max-h-[600px] p-4 text-sm lg:p-8 lg:text-base">
+            <b className="text-base lg:text-lg mb-2">Your Fruits</b>
             <div className="flex flex-col h-full overflow-y-auto">
               {Object.keys(jarContents).map((fruit) =>
                 jarContents[fruit] > 0 ? (
                   <div
                     key={`${fruit}-inJar`}
-                    className="text-left flex flex-row items-center justify-between p-1"
+                    className="text-left flex flex-row flex-wrap items-center justify-between mb-1"
                   >
                     {fruit} x {jarContents[fruit]}
-                    <span className="flex flex-row items-center ml-15 w-[150px] justify-between">
+                    <span className="flex flex-row items-center w-[130px] justify-between">
                       Calories: {getFruitCalories(fruit)}
                       <Tooltip>
                         <TooltipTrigger>
                           <XCircle
-                            className="h-4 ml-4"
+                            className="h-4"
                             onClick={() => {
                               setJarContents((prev: FruitJarContents) => {
                                 const newContents = { ...prev };
@@ -81,14 +91,20 @@ const FruitJar: React.FC<FruitJarProps> = ({
             </div>
 
             {totalCalories > 0 ? (
-              <div className="mt-2 font-bold">
+              <div className="mt-2 font-bold text-base lg:text-lg">
                 Total Calories: {totalCalories}
               </div>
             ) : null}
           </div>
         </TabsContent>
         <TabsContent value="chart">
-          <div className="flex flex-col w-full h-full p-8 pt-6 bg-white border rounded-lg shadow-lg"></div>
+          <div className="flex flex-col w-full h-full p-4 bg-white border rounded-lg shadow-lg max-h-[640px]">
+            <ChartPieLabelCustom
+              jarContents={jarContents}
+              getFruitCalories={getFruitCalories}
+              totalCalories={totalCalories}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </div>
