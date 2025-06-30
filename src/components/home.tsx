@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import FruitList from "./fruitList"; // Assuming this is a component that lists fruits
 
-interface Fruit {
+export interface Fruit {
   id: number;
   name: string;
   family: string;
@@ -16,11 +17,8 @@ interface Fruit {
   };
 }
 
-interface FruitInJar {
-  name: string;
-  id: number;
-  quantity: number;
-  calories: number;
+export interface FruitJarContents {
+  [key: string]: number;
 }
 
 const Home = () => {
@@ -39,11 +37,7 @@ const Home = () => {
     },
   });
 
-  const [jarContents, setJarContents] = useState<FruitInJar[]>([]);
-
-  const alphatbeticalFruits = data?.sort((a, b) =>
-    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-  );
+  const [jarContents, setJarContents] = useState<FruitJarContents>({});
 
   if (isPending) return <div>Loading...</div>;
 
@@ -53,11 +47,11 @@ const Home = () => {
     console.log(data);
     return (
       <>
-        {alphatbeticalFruits?.map((fruit) => (
-          <div className="flex text-left" key={fruit.id}>
-            {fruit.name} - {fruit.nutritions.calories} calories
-          </div>
-        ))}
+        <FruitList
+          allFruits={data}
+          jarContents={jarContents}
+          setJarContents={setJarContents}
+        />
       </>
     );
   }
