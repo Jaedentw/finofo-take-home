@@ -6,7 +6,6 @@ import App from "./App.tsx";
 const root = createRoot(document.getElementById("root")!);
 root.render(
   <StrictMode>
-    Test text at main.tsx level
     <App />
   </StrictMode>
 );

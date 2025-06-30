@@ -7,7 +7,6 @@ function App() {
 
   return (
     <QueryClientProvider client={fruits}>
-      Test Text App.tsx level
       <Home />
     </QueryClientProvider>
   );
