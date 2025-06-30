@@ -57,7 +57,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
         </TabsList>
 
         <TabsContent value="contents" className="h-full">
-          <div className="flex flex-col w-full h-full bg-white border rounded-lg shadow-lg max-h-[600px] p-4 text-sm lg:p-8 lg:text-base">
+          <div className="flex flex-col w-full h-full bg-white border rounded-lg shadow-lg max-h-[600px] p-4 text-sm lg:p-8 lg:pt-4 lg:pb-4 lg:text-base">
             <b className="text-base lg:text-lg mb-2">Your Fruits</b>
             <div className="flex flex-col h-full overflow-y-auto">
               {Object.keys(jarContents).map((fruit) =>
@@ -91,7 +91,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
             </div>
 
             {totalCalories > 0 ? (
-              <div className="mt-2 font-bold text-base lg:text-lg">
+              <div className="mt-4 font-bold text-base lg:text-lg">
                 Total Calories: {totalCalories}
               </div>
             ) : null}
