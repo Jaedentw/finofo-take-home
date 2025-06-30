@@ -28,15 +28,9 @@ const FruitList: React.FC<FruitListProps> = ({
 }) => {
   const [sortValue, setSortValue] = useState<SortValueType>("name");
 
-  // Sorts the fruits alphabetically by name for basic list display
-  const alphatbeticalFruits = allFruits?.sort((a, b) =>
-    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-  );
-
   // Creates a list of accordion headers based on the selected sortValue
   const sortingArray = [
-    ...new Set(allFruits.map((fruit: Fruit) => fruit[sortValue].trim())),
-    //.trim() to avoid leading/trailing spaces, you have one family: " Ebenaceae" in your database that was causing issues
+    ...new Set(allFruits.map((fruit: Fruit) => fruit[sortValue])),
   ];
   // Sort the sortingArray alphabetically
   sortingArray.sort((a, b) =>
@@ -46,10 +40,12 @@ const FruitList: React.FC<FruitListProps> = ({
   const [accordionValue, setAccordionValue] = useState<string[]>([]); // State to manage which accordions are expanded
   useEffect(() => {
     setAccordionValue([...sortingArray]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortValue]); //Expands all accordions when sortValue changes
 
   return (
     <>
+      {/* Radio Group for selecting sort type */}
       <div className="flex items-center justify-between mb-4">
         <RadioGroup
           defaultValue="name"
@@ -75,6 +71,7 @@ const FruitList: React.FC<FruitListProps> = ({
           </div>
         </RadioGroup>
 
+        {/* expand and collapse all accordion buttons for user ease */}
         {sortValue !== "name" && (
           <div className="flex items-center space-x-2">
             <Button
@@ -97,9 +94,9 @@ const FruitList: React.FC<FruitListProps> = ({
 
       {/* Display the list of fruits alphabetically if sortValue is "name"(none) */}
       {sortValue === "name" &&
-        alphatbeticalFruits?.map((fruit) => (
+        allFruits?.map((fruit) => (
           <FruitListItem
-            className="border-b p-2 fb"
+            className="border-b p-2 nb"
             fruit={fruit}
             jarContents={jarContents}
             setJarContents={setJarContents}
@@ -134,7 +131,7 @@ const FruitList: React.FC<FruitListProps> = ({
                             if (accordionValue.includes(sorter)) {
                               //If statement prevents adding fruits when the accordion is closed
                               e.stopPropagation(); // Prevents the accordion from toggling
-                              alphatbeticalFruits
+                              allFruits
                                 .filter((fruit) => fruit[sortValue] === sorter)
                                 .forEach((fruit) => {
                                   console.log(fruit);
@@ -156,7 +153,7 @@ const FruitList: React.FC<FruitListProps> = ({
                   </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  {alphatbeticalFruits
+                  {allFruits
                     .filter((fruit) => fruit[sortValue] === sorter)
                     .map((fruit) => (
                       <FruitListItem

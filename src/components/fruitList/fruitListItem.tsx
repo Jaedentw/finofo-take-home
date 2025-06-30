@@ -9,6 +9,8 @@ interface FruitListItemProps {
   className?: string; // Optional className prop for styling
 }
 
+//className containing "nb" = "name bold", "nc" = "no calories"
+
 const FruitListItem: React.FC<FruitListItemProps> = ({
   fruit,
   jarContents,
@@ -46,11 +48,16 @@ const FruitListItem: React.FC<FruitListItemProps> = ({
           })
         } // Decrement count
       />
-      <span className={cn(className.includes("fb") ? "font-semibold" : "")}>
+      <span className={cn(className.includes("nb") ? "font-semibold" : "")}>
         {fruit.name} &nbsp;
-        {/* Display fruit name with semibold font if className includes "fb", for enhancement of styling on main list view*/}
+        {/* Display fruit name with semibold font if className includes "nb", for enhancement of styling on main list view*/}
       </span>
-      - {fruit.nutritions.calories} calories
+      {className.includes("nc") ? (
+        ""
+      ) : (
+        <>- {fruit.nutritions.calories} calories</>
+      )}
+      {/* Don't display calorie count if className includes "nc", this is for usage in the data table*/}
     </div>
   );
 };
