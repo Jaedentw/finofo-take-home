@@ -49,7 +49,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
 
       <Tabs
         defaultValue="contents"
-        className="relative top-[30%] left-0 w-[80%] h-full max-h-[65%] md:w-[60%] md:max-h-[55%] lg:max-h-[65%]"
+        className="relative top-[30%] left-0 w-[80%] h-full max-h-[65%] md:w-[60%] md:max-h-[65%]"
       >
         <TabsList className="mb-1 border shadow-lg">
           <TabsTrigger value="contents">Jar Contents</TabsTrigger>
