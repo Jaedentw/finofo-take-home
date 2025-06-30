@@ -46,7 +46,7 @@ const FruitList: React.FC<FruitListProps> = ({
   return (
     <>
       {/* Radio Group for selecting sort type */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex w-full items-center justify-between p-2 h-[52px]">
         <RadioGroup
           defaultValue="name"
           className="flex"
@@ -93,80 +93,84 @@ const FruitList: React.FC<FruitListProps> = ({
       </div>
 
       {/* Display the list of fruits alphabetically if sortValue is "name"(none) */}
-      {sortValue === "name" &&
-        allFruits?.map((fruit) => (
-          <FruitListItem
-            className="border-b p-2 nb"
-            fruit={fruit}
-            jarContents={jarContents}
-            setJarContents={setJarContents}
-            key={fruit.id}
-          />
-        ))}
-
-      {/* Display the list of fruits in accordion style if anything is selected but name/none */}
-      <Accordion
-        type="multiple"
-        onValueChange={(e) => {
-          setAccordionValue(e);
-        }}
-        value={accordionValue}
-      >
-        {sortValue !== "name" &&
-          sortingArray.map(
-            (
-              sorter // Map through the sortingArray to create accordion items
-            ) => (
-              <AccordionItem value={sorter} className="mb-2">
-                <AccordionTrigger className="text-left font-bold">
-                  {/* Display the sorter name as the accordion header and display group add button with tooltip*/}
-                  <span className="flex items-center gap-2 text-base">
-                    {sorter}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <PlusCircle
-                          className="h-5"
-                          stroke="grey"
-                          onClick={(e) => {
-                            if (accordionValue.includes(sorter)) {
-                              //If statement prevents adding fruits when the accordion is closed
-                              e.stopPropagation(); // Prevents the accordion from toggling
-                              allFruits
-                                .filter((fruit) => fruit[sortValue] === sorter)
-                                .forEach((fruit) => {
-                                  console.log(fruit);
-                                  setJarContents((prev: FruitJarContents) => {
-                                    return {
-                                      ...prev,
-                                      [fruit.name]: (prev[fruit.name] || 0) + 1,
-                                    };
+      <div className="flex flex-col mt-2 h-full max-h-[85vh] overflow-y-auto">
+        {sortValue === "name" &&
+          allFruits?.map((fruit) => (
+            <FruitListItem
+              className="border-b p-2 nb"
+              fruit={fruit}
+              jarContents={jarContents}
+              setJarContents={setJarContents}
+              key={fruit.id}
+            />
+          ))}
+        {/* Display the list of fruits in accordion style if anything is selected but name/none */}
+        <Accordion
+          type="multiple"
+          onValueChange={(e) => {
+            setAccordionValue(e);
+          }}
+          value={accordionValue}
+        >
+          {sortValue !== "name" &&
+            sortingArray.map(
+              (
+                sorter // Map through the sortingArray to create accordion items
+              ) => (
+                <AccordionItem value={sorter} className="mb-2">
+                  <AccordionTrigger className="text-left font-bold p-2 pr-4">
+                    {/* Display the sorter name as the accordion header and display group add button with tooltip*/}
+                    <span className="flex items-center gap-2 text-base">
+                      {sorter}
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <PlusCircle
+                            className="h-5"
+                            stroke="grey"
+                            onClick={(e) => {
+                              if (accordionValue.includes(sorter)) {
+                                //If statement prevents adding fruits when the accordion is closed
+                                e.stopPropagation(); // Prevents the accordion from toggling
+                                allFruits
+                                  .filter(
+                                    (fruit) => fruit[sortValue] === sorter
+                                  )
+                                  .forEach((fruit) => {
+                                    console.log(fruit);
+                                    setJarContents((prev: FruitJarContents) => {
+                                      return {
+                                        ...prev,
+                                        [fruit.name]:
+                                          (prev[fruit.name] || 0) + 1,
+                                      };
+                                    });
                                   });
-                                });
-                            }
-                          }}
+                              }
+                            }}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          Add 1 of each {sorter} fruit to the jar
+                        </TooltipContent>
+                      </Tooltip>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pl-2">
+                    {allFruits
+                      .filter((fruit) => fruit[sortValue] === sorter)
+                      .map((fruit) => (
+                        <FruitListItem
+                          fruit={fruit}
+                          jarContents={jarContents}
+                          setJarContents={setJarContents}
                         />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        Add 1 of each {sorter} fruit to the jar
-                      </TooltipContent>
-                    </Tooltip>
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  {allFruits
-                    .filter((fruit) => fruit[sortValue] === sorter)
-                    .map((fruit) => (
-                      <FruitListItem
-                        fruit={fruit}
-                        jarContents={jarContents}
-                        setJarContents={setJarContents}
-                      />
-                    ))}
-                </AccordionContent>
-              </AccordionItem>
-            )
-          )}
-      </Accordion>
+                      ))}
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            )}
+        </Accordion>
+      </div>
     </>
   );
 };

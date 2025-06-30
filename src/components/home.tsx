@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import FruitList from "./fruitList";
 import FruitTable from "./fruitTable";
+import FruitJar from "./fruitJar";
 
 export interface Fruit {
   id: number;
@@ -61,18 +63,40 @@ const Home = () => {
     });
 
     return (
-      <>
-        <FruitTable
-          allFruits={data}
-          jarContents={jarContents}
-          setJarContents={setJarContents}
-        />
-        <FruitList
-          allFruits={data}
-          jarContents={jarContents}
-          setJarContents={setJarContents}
-        />
-      </>
+      <div className="flex w-full flex-row gap-10">
+        <Tabs defaultValue="list" className="w-full min-w-[730px]">
+          <TabsList className="mb-4">
+            <TabsTrigger value="list">List View</TabsTrigger>
+            <TabsTrigger value="table">Table View</TabsTrigger>
+          </TabsList>
+
+          <TabsContent
+            value="list"
+            className="flex flex-col h-full max-h-[85vh] overflow-y-auto"
+          >
+            <FruitList
+              allFruits={data}
+              jarContents={jarContents}
+              setJarContents={setJarContents}
+            />
+          </TabsContent>
+
+          <TabsContent value="table">
+            <FruitTable
+              allFruits={data}
+              jarContents={jarContents}
+              setJarContents={setJarContents}
+            />
+          </TabsContent>
+        </Tabs>
+        <div className="w-full">
+          <FruitJar
+            jarContents={jarContents}
+            setJarContents={setJarContents}
+            allFruits={data}
+          />
+        </div>
+      </div>
     );
   }
 };

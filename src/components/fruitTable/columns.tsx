@@ -7,7 +7,18 @@ import { Button } from "../ui/button";
 export const columns: ColumnDef<Fruit>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="text-base"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: (info) => info.getValue(),
   },
   {
@@ -15,6 +26,7 @@ export const columns: ColumnDef<Fruit>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="text-base"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -30,6 +42,7 @@ export const columns: ColumnDef<Fruit>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="text-base"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -45,6 +58,7 @@ export const columns: ColumnDef<Fruit>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="text-base"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -60,6 +74,7 @@ export const columns: ColumnDef<Fruit>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="text-base"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >

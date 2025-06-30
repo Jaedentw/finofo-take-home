@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell className="text-left" key={cell.id}>
+                  <TableCell className="text-left pl-5" key={cell.id}>
                     {cell.column.id === "name" ? (
                       <FruitListItem
                         fruit={cell.row.original as Fruit}
