@@ -65,7 +65,10 @@ const Home = () => {
 
     return (
       <div className="flex w-full flex-col-reverse lg:flex-row gap-10 ">
-        <Tabs defaultValue="list" className="w-full min-w-[400px] ">
+        <Tabs
+          defaultValue="list"
+          className="w-full min-w-[400px] 2xl:min-w-[860px]"
+        >
           <TabsList className="mb-1">
             <TabsTrigger value="list">List View</TabsTrigger>
             <TabsTrigger value="table">Table View</TabsTrigger>
@@ -91,7 +94,7 @@ const Home = () => {
             />
           </TabsContent>
         </Tabs>
-        <div className="w-full min-w-[400px]">
+        <div className="min-w-[415px] 2xl:w-full">
           <FruitJar
             jarContents={jarContents}
             setJarContents={setJarContents}

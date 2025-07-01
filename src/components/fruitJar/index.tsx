@@ -3,7 +3,7 @@ import type { Fruit, FruitJarContents } from "../home";
 import React, { useMemo, useState } from "react";
 import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
-import { ChartPieLabelCustom } from "./pie-chart";
+import { CustomPieChart } from "./pie-chart";
 
 interface FruitJarProps {
   allFruits: Fruit[];
@@ -35,7 +35,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
   }, [jarContents]);
 
   return (
-    <div className="flex flex-col items-center bg-[url(/src/assets/glass-jar.png)] bg-contain bg-center bg-no-repeat relative w-full h-[90vh]">
+    <div className="flex flex-col items-center bg-[url(/src/assets/glass-jar.png)] bg-contain bg-center bg-no-repeat relative w-full h-[60vh] lg:h-[90vh] lg:w-[415px] 2xl:w-full">
       <Tooltip>
         <TooltipTrigger className="absolute right-0 top-6">
           <Ban
@@ -49,7 +49,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
 
       <Tabs
         defaultValue="contents"
-        className="relative top-[30%] left-0 w-[80%] h-full max-h-[65%] md:w-[60%] md:max-h-[65%]"
+        className="relative top-[30%] left-0 w-[50%] h-full max-h-[65%] md:max-h-[65%] min-w-[350px] 2xl:min-w-[450px]"
       >
         <TabsList className="mb-1 border shadow-lg">
           <TabsTrigger value="contents">Jar Contents</TabsTrigger>
@@ -57,7 +57,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
         </TabsList>
 
         <TabsContent value="contents" className="h-full">
-          <div className="flex flex-col w-full h-full bg-white border rounded-lg shadow-lg max-h-[600px] p-4 text-sm lg:p-8 lg:pt-4 lg:pb-4 lg:text-base">
+          <div className="flex flex-col w-full h-full bg-white border p-4 rounded-lg shadow-lg max-h-[400px]">
             <b className="text-base lg:text-lg mb-2">Your Fruits</b>
             <div className="flex flex-col h-full overflow-y-auto">
               {Object.keys(jarContents).map((fruit) =>
@@ -98,13 +98,11 @@ const FruitJar: React.FC<FruitJarProps> = ({
           </div>
         </TabsContent>
         <TabsContent value="chart">
-          <div className="flex flex-col w-full h-full p-4 bg-white border rounded-lg shadow-lg max-h-[640px]">
-            <ChartPieLabelCustom
-              jarContents={jarContents}
-              getFruitCalories={getFruitCalories}
-              totalCalories={totalCalories}
-            />
-          </div>
+          <CustomPieChart
+            jarContents={jarContents}
+            getFruitCalories={getFruitCalories}
+            totalCalories={totalCalories}
+          />
         </TabsContent>
       </Tabs>
     </div>
