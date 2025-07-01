@@ -49,7 +49,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
 
       <Tabs
         defaultValue="contents"
-        className="relative top-[30%] left-0 w-[50%] h-full max-h-[65%] md:max-h-[65%] min-w-[350px] 2xl:min-w-[450px]"
+        className="relative top-[30%] left-0 w-[50%] h-full max-h-[65%] md:max-h-[65%] min-w-[350px] 2xl:min-w-[400px] 2xl:w-[60%]"
       >
         <TabsList className="mb-1 border shadow-lg">
           <TabsTrigger value="contents">Jar Contents</TabsTrigger>
@@ -57,7 +57,7 @@ const FruitJar: React.FC<FruitJarProps> = ({
         </TabsList>
 
         <TabsContent value="contents" className="h-full">
-          <div className="flex flex-col w-full h-full bg-white border p-4 rounded-lg shadow-lg max-h-[400px]">
+          <div className="flex flex-col w-full h-full bg-white border p-4 rounded-lg shadow-lg max-h-[400px] 2xl:max-h-[500px]">
             <b className="text-base lg:text-lg mb-2">Your Fruits</b>
             <div className="flex flex-col h-full overflow-y-auto">
               {Object.keys(jarContents).map((fruit) =>

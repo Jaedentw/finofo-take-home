@@ -67,7 +67,7 @@ const Home = () => {
       <div className="flex w-full flex-col-reverse lg:flex-row gap-10 ">
         <Tabs
           defaultValue="list"
-          className="w-full min-w-[400px] 2xl:min-w-[860px]"
+          className="w-full min-w-[400px] 2xl:min-w-[750px]"
         >
           <TabsList className="mb-1">
             <TabsTrigger value="list">List View</TabsTrigger>
