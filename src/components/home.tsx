@@ -5,6 +5,7 @@ import FruitList from "./fruitList";
 import { DataTable } from "./fruitTable/data-table";
 import { columns } from "./fruitTable/columns";
 import FruitJar from "./fruitJar";
+import { backupData } from "../assets/backup-data";
 
 export interface Fruit {
   id: number;
@@ -37,6 +38,7 @@ const Home = () => {
           },
         }
       );
+      console.log("Something to show mychanges are deployed");
       return (await response.json()) as Fruit[];
     },
   }); //tanstack react-query for data fetching, makes it easy to handle loading, error, and fetched states
@@ -45,65 +47,71 @@ const Home = () => {
 
   if (isPending) return <div>Loading...</div>;
 
-  if (error) return <div>Error: {error.message}</div>;
+  let fruitData: Fruit[] = [];
 
   if (isFetched) {
-    console.log(data);
+    fruitData = data ?? [];
+  }
 
-    // Sorts the fruits alphabetically by name for both table and list display
-    data?.sort((a, b) =>
-      a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
-    );
-    // Trims whitespace from family, genus, and order fields for sorting purposes
-    // Japanese Persimmon has trailing space in it's data
-    data?.forEach((fruit) => {
-      fruit.name = fruit.name.trim();
-      fruit.family = fruit.family.trim();
-      fruit.genus = fruit.genus.trim();
-      fruit.order = fruit.order.trim();
-    });
+  if (error) {
+    fruitData = backupData;
+  }
 
-    return (
-      <div className="flex w-full flex-col-reverse lg:flex-row gap-10 ">
-        <Tabs
-          defaultValue="list"
-          className="w-full min-w-[400px] 2xl:min-w-[750px]"
+  console.log(fruitData);
+
+  // Sorts the fruits alphabetically by name for both table and list display
+  fruitData?.sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+  );
+  // Trims whitespace from family, genus, and order fields for sorting purposes
+  // Japanese Persimmon has trailing space in it's data
+  fruitData?.forEach((fruit) => {
+    fruit.name = fruit.name.trim();
+    fruit.family = fruit.family.trim();
+    fruit.genus = fruit.genus.trim();
+    fruit.order = fruit.order.trim();
+  });
+
+  return (
+    <div className="flex w-full flex-col-reverse lg:flex-row gap-10 ">
+      <Tabs
+        defaultValue="list"
+        className="w-full min-w-[400px] 2xl:min-w-[750px]"
+      >
+        <TabsList className="mb-1">
+          <TabsTrigger value="list">List View</TabsTrigger>
+          <TabsTrigger value="table">Table View</TabsTrigger>
+        </TabsList>
+
+        <TabsContent
+          value="list"
+          className="flex flex-col h-full max-h-[85vh] overflow-y-auto"
         >
-          <TabsList className="mb-1">
-            <TabsTrigger value="list">List View</TabsTrigger>
-            <TabsTrigger value="table">Table View</TabsTrigger>
-          </TabsList>
-
-          <TabsContent
-            value="list"
-            className="flex flex-col h-full max-h-[85vh] overflow-y-auto"
-          >
-            <FruitList
-              allFruits={data}
-              jarContents={jarContents}
-              setJarContents={setJarContents}
-            />
-          </TabsContent>
-
-          <TabsContent value="table">
-            <DataTable
-              columns={columns}
-              data={data}
-              jarContents={jarContents}
-              setJarContents={setJarContents}
-            />
-          </TabsContent>
-        </Tabs>
-        <div className="min-w-[415px] 2xl:w-full">
-          <FruitJar
+          <FruitList
+            allFruits={fruitData}
             jarContents={jarContents}
             setJarContents={setJarContents}
-            allFruits={data}
           />
-        </div>
+        </TabsContent>
+
+        <TabsContent value="table">
+          <DataTable
+            columns={columns}
+            data={fruitData}
+            jarContents={jarContents}
+            setJarContents={setJarContents}
+          />
+        </TabsContent>
+      </Tabs>
+      <div className="min-w-[415px] 2xl:w-full">
+        <FruitJar
+          jarContents={jarContents}
+          setJarContents={setJarContents}
+          allFruits={fruitData}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default Home;
