@@ -24,14 +24,14 @@ export function CustomPieChart({
       name: fruitName,
       totalCalories,
       fill: randomColorGenerator(),
+      //random color generator since the fruits don't have associated colors in their data
+      //if this was a proper app with a color pallette a different method would be used
     };
   });
 
-  console.log("Chart data:", chartData);
-
   return (
     <div className="flex flex-col items-center p-4 bg-white border rounded-lg shadow-lg">
-      <b>Your Fruit Pie</b>
+      <b className="text-base lg:text-lg">Your Fruit Pie</b>
       <div className="flex flex-col items-center">
         <PieChart width={300} height={300} className="2xl:hidden">
           <Pie
@@ -46,6 +46,7 @@ export function CustomPieChart({
           <Tooltip />
         </PieChart>
 
+        {/* Larger sized pie chart visible only at the largest screen size */}
         <PieChart width={500} height={500} className="hidden 2xl:flex">
           <Pie
             dataKey="totalCalories"
@@ -59,7 +60,7 @@ export function CustomPieChart({
           <Tooltip />
         </PieChart>
       </div>
-      <b>Total Calories: {totalCalories}</b>
+      <b className="text-base lg:text-lg">Total Calories: {totalCalories}</b>
     </div>
   );
 }

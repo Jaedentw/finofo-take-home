@@ -27,7 +27,6 @@ export interface FruitJarContents {
 }
 
 const Home = () => {
-  console.log("before req");
   const { isPending, error, isFetched, data } = useQuery({
     queryKey: ["allFruits"],
     queryFn: async () => {
@@ -39,11 +38,10 @@ const Home = () => {
           },
         }
       );
-      console.log("durring req");
       return (await response.json()) as Fruit[];
     },
   }); //tanstack react-query for data fetching, makes it easy to handle loading, error, and fetched states
-  console.log("after req");
+
   const [jarContents, setJarContents] = useState<FruitJarContents>({});
 
   if (isPending) return <div>Loading...</div>;
@@ -59,8 +57,6 @@ const Home = () => {
   }
 
   fruitData = backupData;
-
-  console.log(fruitData);
 
   // Sorts the fruits alphabetically by name for both table and list display
   fruitData?.sort((a, b) =>

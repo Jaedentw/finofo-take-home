@@ -130,13 +130,12 @@ const FruitList: React.FC<FruitListProps> = ({
                             onClick={(e) => {
                               if (accordionValue.includes(sorter)) {
                                 //If statement prevents adding fruits when the accordion is closed
-                                e.stopPropagation(); // Prevents the accordion from toggling
+                                e.stopPropagation(); // Prevents the accordion from toggling closed on button click
                                 allFruits
                                   .filter(
                                     (fruit) => fruit[sortValue] === sorter
                                   )
                                   .forEach((fruit) => {
-                                    console.log(fruit);
                                     setJarContents((prev: FruitJarContents) => {
                                       return {
                                         ...prev,
