@@ -9,7 +9,7 @@ interface FruitListItemProps {
   className?: string; // Optional className prop for styling
 }
 
-//className containing "nb" = "name bold", "nc" = "no calories"
+//className containing "lv" = "list view", "nc" = "no calories"
 
 const FruitListItem: React.FC<FruitListItemProps> = ({
   fruit,
@@ -48,14 +48,21 @@ const FruitListItem: React.FC<FruitListItemProps> = ({
           })
         } // Decrement count
       />
-      <span className={cn(className.includes("nb") ? "font-semibold" : "")}>
-        {fruit.name} &nbsp;
-        {/* Display fruit name with semibold font if className includes "nb", for enhancement of styling on main list view*/}
+      <span
+        className={cn(className.includes("lv") ? "max-w-[300px] w-full" : "")}
+      >
+        {fruit.name}
+        {/* conditional styling for enhancement on main list view*/}
       </span>
+      {!className.includes("nc") && !className.includes("lv") ? (
+        <>&nbsp;-&nbsp;</>
+      ) : null}
       {className.includes("nc") ? (
         ""
       ) : (
-        <>- {fruit.nutritions.calories} calories</>
+        <span className="min-w-[85px]">
+          {fruit.nutritions.calories} calories
+        </span>
       )}
       {/* Don't display calorie count if className includes "nc", this is for usage in the data table*/}
     </div>

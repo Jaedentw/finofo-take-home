@@ -97,7 +97,7 @@ const FruitList: React.FC<FruitListProps> = ({
         {sortValue === "name" &&
           allFruits?.map((fruit) => (
             <FruitListItem
-              className="border-b p-2 nb"
+              className="border-b p-2 lv"
               fruit={fruit}
               jarContents={jarContents}
               setJarContents={setJarContents}
