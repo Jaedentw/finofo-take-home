@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import FruitList from "./fruitList";
@@ -27,35 +27,37 @@ export interface FruitJarContents {
 }
 
 const Home = () => {
-  const { isPending, error, isFetched, data } = useQuery({
-    queryKey: ["allFruits"],
-    queryFn: async () => {
-      const response = await fetch(
-        "https://fruity-proxy.vercel.app/api/fruits",
-        {
-          headers: {
-            "x-api-key": "fruit-api-challenge-2025",
-          },
-        }
-      );
-      console.log("Something to show mychanges are deployed");
-      return (await response.json()) as Fruit[];
-    },
-  }); //tanstack react-query for data fetching, makes it easy to handle loading, error, and fetched states
+  // const { isPending, error, isFetched, data } = useQuery({
+  //   queryKey: ["allFruits"],
+  //   queryFn: async () => {
+  //     const response = await fetch(
+  //       "https://fruity-proxy.vercel.app/api/fruits",
+  //       {
+  //         headers: {
+  //           "x-api-key": "fruit-api-challenge-2025",
+  //         },
+  //       }
+  //     );
+  //     console.log("Something to show mychanges are deployed");
+  //     return (await response.json()) as Fruit[];
+  //   },
+  // }); //tanstack react-query for data fetching, makes it easy to handle loading, error, and fetched states
 
   const [jarContents, setJarContents] = useState<FruitJarContents>({});
 
-  if (isPending) return <div>Loading...</div>;
+  // if (isPending) return <div>Loading...</div>;
 
   let fruitData: Fruit[] = [];
 
-  if (isFetched) {
-    fruitData = data ?? [];
-  }
+  // if (isFetched) {
+  //   fruitData = data ?? [];
+  // }
 
-  if (error) {
-    fruitData = backupData;
-  }
+  // if (error) {
+  //   fruitData = backupData;
+  // }
+
+  fruitData = backupData;
 
   console.log(fruitData);
 
